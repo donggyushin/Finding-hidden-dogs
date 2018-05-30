@@ -94,10 +94,12 @@ function foundDog(clicked_id) {
   if (!nav.gamePossible) {
     return;
   }
+
   if (clicked[clicked_id] == 1) {
     //한번이라도 눌렸던 적이 있다면
     return; //바로 함수 종료
   }
+
   clicked[clicked_id] = 1; //눌렀었다는 표시
   nav.leftCount -= 1;
   console.log(nav.leftCount);
@@ -105,6 +107,9 @@ function foundDog(clicked_id) {
   test.setAttribute("src", "./images/dog.png");
 
   givingNavInfo();
+  if (nav.leftCount == 0) {
+    successGame();
+  }
 }
 
 //틀린 달걀을 눌렀을때 작동하는 함수
@@ -140,6 +145,15 @@ function countDown() {
   nav.leftTime -= 1;
 
   givingNavInfo();
+}
+
+function successGame() {
+  //성공했을때 끝내는 함수.
+  document.getElementById("gameMessage").innerHTML = "성공";
+  document.getElementById("gameSuccessMessage").style.display = "flex";
+  nav.gamePossible = false;
+  nav.gameEnd = true;
+  rebuildStartButton();
 }
 
 function endGame() {
@@ -259,6 +273,7 @@ function restartGame() {
         </div>
         <div class="game_screen">
           <h1 class="gameOverMessage" id="gameOverMessage">GAME OVER</h1>
+          <h1 class="gameSuccessMessage" id="gameSuccessMessage">SUCCESS</h1>
           <div class='egg'><img src='./images/egg.png' onclick='clickEggs(this.id)'  id=0></div>
           <div class='egg'><img src='./images/egg.png' onclick='clickEggs(this.id)'  id=1></div>
           <div class='egg'><img src='./images/egg.png' onclick='clickEggs(this.id)'  id=2></div>
